@@ -280,6 +280,25 @@ function! limelight#execute(bang, visual, ...) range
   endif
 endfunction
 
+function! limelight#window(bang)
+  let range = [line("$") + 1, line("$") + 2]
+  if a:bang
+    if a:0 > 0 && a:1 =~ '^!' && !s:is_on()
+      if len(a:1) > 1
+        call s:on(range, a:1[1:-1])
+      else
+        call s:on(range)
+      endif
+    else
+      call s:off()
+    endif
+  elseif a:0 > 0
+    call s:on(range, a:1)
+  else
+    call s:on(range)
+  endif
+endfunction
+
 function! limelight#operator(...)
   '[,']call limelight#execute(0, 1)
 endfunction
