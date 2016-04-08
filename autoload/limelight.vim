@@ -284,6 +284,12 @@ function! limelight#fadeWindow(bang)
   if a:bang
     call s:off()
   else
+    try
+        let s:limelight_coeff = a:0 > 0 ? s:parse_coeff(a:1) : -1
+        call s:dim(s:limelight_coeff)
+    catch
+        return s:error(v:exception)
+    endtry
     call s:hl(1, line("$"))
   endif
 endfunction
