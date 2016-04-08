@@ -280,22 +280,11 @@ function! limelight#execute(bang, visual, ...) range
   endif
 endfunction
 
-function! limelight#winexe(bang, ...) range
-  let range = [0,0]
+function! limelight#fadeWindow(bang)
   if a:bang
-    if a:0 > 0 && a:1 =~ '^!' && !s:is_on()
-      if len(a:1) > 1
-        call s:on(range, a:1[1:-1])
-      else
-        call s:on(range)
-      endif
-    else
-      call s:off()
-    endif
-  elseif a:0 > 0
-    call s:on(range, a:1)
+    call s:off([1, line("$")])
   else
-    call s:on(range)
+    call s:hl(1, line("$"))
   endif
 endfunction
 
