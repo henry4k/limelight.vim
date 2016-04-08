@@ -282,7 +282,7 @@ endfunction
 
 function! limelight#fadeWindow(bang)
   if a:bang
-    call s:off([1, line("$")])
+    call s:off()
   else
     call s:hl(1, line("$"))
   endif
