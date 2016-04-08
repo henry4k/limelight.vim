@@ -280,7 +280,7 @@ function! limelight#execute(bang, visual, ...) range
   endif
 endfunction
 
-function! limelight#window(bang)
+function! limelight#window(bang, ...)
   let range = [line("$") + 1, line("$") + 2]
   if a:bang
     if a:0 > 0 && a:1 =~ '^!' && !s:is_on()
