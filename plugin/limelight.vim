@@ -23,5 +23,7 @@
 
 command! -nargs=? -bar -bang -range Limelight <line1>,<line2>call limelight#execute(<bang>0, <count> > 0, <f-args>)
 
+command! -nargs=? -bar -bang LimelightW call limelight#execute(<bang>0, limelight#winexe(<bang>0, 1, <f-args>)
+
 nnoremap <silent> <Plug>(Limelight) :set opfunc=limelight#operator<CR>g@
 xnoremap <silent> <Plug>(Limelight) :Limelight<CR>
