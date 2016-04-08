@@ -280,24 +280,9 @@ function! limelight#execute(bang, visual, ...) range
   endif
 endfunction
 
-function! limelight#fadeWindow(bang)
-  if a:bang
-    call s:off()
-  else
-    try
-        let s:limelight_coeff = a:0 > 0 ? s:parse_coeff(a:1) : -1
-        call s:dim(s:limelight_coeff)
-    catch
-        return s:error(v:exception)
-    endtry
-    call s:hl(1, line("$"))
-  endif
-endfunction
-
 function! limelight#operator(...)
   '[,']call limelight#execute(0, 1)
 endfunction
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
-
