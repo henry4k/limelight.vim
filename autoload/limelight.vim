@@ -38,7 +38,7 @@ function! s:nvim_unsupported()
 endfunction
 
 function! s:unsupported()
-  let var = 'g:limelight_conceal_'.(has('gui_running') ? 'gui' : 'cterm').'fg'
+  let var = 'g:limelight_conceal_'.(has('gui_running') || has('nvim') ? 'gui' : 'cterm').'fg'
 
   if exists(var)
     return 'Cannot calculate background color.'
@@ -144,7 +144,7 @@ function! s:dim(coeff)
   let fg = synIDattr(synid, 'fg#')
   let bg = synIDattr(synid, 'bg#')
 
-  if has('gui_running')
+  if has('gui_running') || has('nvim') " thanks /u/tuga3d !
     if a:coeff < 0 && exists('g:limelight_conceal_guifg')
       let dim = g:limelight_conceal_guifg
     elseif empty(fg) || empty(bg)
