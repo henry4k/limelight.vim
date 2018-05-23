@@ -29,7 +29,7 @@ let g:loaded_limelight = 1
 let s:cpo_save = &cpo
 set cpo&vim
 
-let s:default_coeff = str2float('0.5')
+let s:default_coeff = str2float('0.0')
 let s:invalid_coefficient = 'Invalid coefficient. Expected: 0.0 ~ 1.0'
 
 function! s:unsupported()
@@ -135,7 +135,7 @@ function! s:coeff(coeff)
 endfunction
 
 function! s:dim(coeff)
-  let synid = synIDtrans(hlID('Normal'))
+  let synid = synIDtrans(hlID('NonText'))
   let fg = synIDattr(synid, 'fg#')
   let bg = synIDattr(synid, 'bg#')
 
