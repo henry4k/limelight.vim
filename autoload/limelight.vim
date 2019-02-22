@@ -33,7 +33,7 @@ let s:default_coeff = str2float('0.0')
 let s:invalid_coefficient = 'Invalid coefficient. Expected: 0.0 ~ 1.0'
 
 function! s:unsupported()
-  let var = 'g:limelight_conceal_'.(has('gui_running') ? 'gui' : 'cterm').'fg'
+  let var = 'g:limelight_conceal_'.(has('gui_running') || has('nvim') ? 'gui' : 'cterm').'fg'
 
   if exists(var)
     return 'Cannot calculate background color.'
@@ -145,7 +145,7 @@ function! s:dim(coeff)
     let bg = synIDattr(bg_synid, 'bg#')
   endif
 
-  if has('gui_running') || has('termguicolors') && &termguicolors || has('nvim') && $NVIM_TUI_ENABLE_TRUE_COLOR
+  if has('gui_running') || (has('termguicolors') && &termguicolors)|| (has('nvim') && $NVIM_TUI_ENABLE_TRUE_COLOR)
     if a:coeff < 0 && exists('g:limelight_conceal_guifg')
       let dim = g:limelight_conceal_guifg
     elseif empty(fg) || empty(bg)
@@ -279,10 +279,28 @@ function! limelight#execute(bang, visual, ...) range
   endif
 endfunction
 
+function! limelight#window(bang, ...)
+  let range = [line("$") + 1, line("$") + 2]
+  if a:bang
+    if a:0 > 0 && a:1 =~ '^!' && !s:is_on()
+      if len(a:1) > 1
+        call s:on(range, a:1[1:-1])
+      else
+        call s:on(range)
+      endif
+    else
+      call s:off()
+    endif
+  elseif a:0 > 0
+    call s:on(range, a:1)
+  else
+    call s:on(range)
+  endif
+endfunction
+
 function! limelight#operator(...)
   '[,']call limelight#execute(0, 1)
 endfunction
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
-
